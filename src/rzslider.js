@@ -75,7 +75,10 @@
       rightToLeft: false,
       boundPointerLabels: true,
       mergeRangeLabelsIfSame: false,
-      customTemplateScope: null
+      customTemplateScope: null,
+      // CUSTOM CHANGES
+      disableBarClick: false,
+      doubleSlider: false
     };
     var globalOptions = {};
 
@@ -1546,11 +1549,14 @@
           if (this.range) {
             this.maxH.on('mousedown', angular.bind(this, this.onStart, this.maxH, 'highValue'));
           }
-          if (!this.options.onlyBindHandles) {
-            this.fullBar.on('mousedown', angular.bind(this, this.onStart, null, null));
-            this.fullBar.on('mousedown', angular.bind(this, this.onMove, this.fullBar));
-            this.ticks.on('mousedown', angular.bind(this, this.onStart, null, null));
-            this.ticks.on('mousedown', angular.bind(this, this.onTickClick, this.ticks));
+          // CUSTOM CHANGES
+          if(!this.options.disableBarClick) {
+            if (!this.options.onlyBindHandles) {
+              this.fullBar.on('mousedown', angular.bind(this, this.onStart, null, null));
+              this.fullBar.on('mousedown', angular.bind(this, this.onMove, this.fullBar));
+              this.ticks.on('mousedown', angular.bind(this, this.onStart, null, null));
+              this.ticks.on('mousedown', angular.bind(this, this.onTickClick, this.ticks));
+            }
           }
         }
 
@@ -1566,11 +1572,14 @@
           if (this.range) {
             this.maxH.on('touchstart', angular.bind(this, this.onStart, this.maxH, 'highValue'));
           }
-          if (!this.options.onlyBindHandles) {
-            this.fullBar.on('touchstart', angular.bind(this, this.onStart, null, null));
-            this.fullBar.on('touchstart', angular.bind(this, this.onMove, this.fullBar));
-            this.ticks.on('touchstart', angular.bind(this, this.onStart, null, null));
-            this.ticks.on('touchstart', angular.bind(this, this.onTickClick, this.ticks));
+          // CUSTOM CHANGES
+          if(!this.options.disableBarClick) {
+            if (!this.options.onlyBindHandles) {
+              this.fullBar.on('touchstart', angular.bind(this, this.onStart, null, null));
+              this.fullBar.on('touchstart', angular.bind(this, this.onMove, this.fullBar));
+              this.ticks.on('touchstart', angular.bind(this, this.onStart, null, null));
+              this.ticks.on('touchstart', angular.bind(this, this.onTickClick, this.ticks));
+            }
           }
         }
 
@@ -1909,6 +1918,13 @@
           newMinValue = this.getValue('min', newOffset, false);
           newMaxValue = this.getValue('max', newOffset, false);
         }
+
+        // CUSTOM CHANGES
+        if(this.options.doubleSlider){
+          if(newMinValue < this.options.minLimit) newMinValue = this.options.minLimit;
+          if(newMaxValue > this.options.maxLimit) newMaxValue = this.options.maxLimit;
+        }
+        
         this.positionTrackingBar(newMinValue, newMaxValue);
       },
 
