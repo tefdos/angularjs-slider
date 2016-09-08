@@ -935,6 +935,7 @@
           var tick = {
             selected: this.isTickSelected(value)
           };
+          tick.style = {};
           if (tick.selected && this.options.getSelectionBarColor) {
             tick.style = {
               'background-color': this.getSelectionBarColor()
