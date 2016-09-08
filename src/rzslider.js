@@ -78,7 +78,8 @@
       customTemplateScope: null,
       // CUSTOM CHANGES
       disableBarClick: false,
-      doubleSlider: false
+      doubleSlider: false,
+      ticksPadding: 0 // wrapper element padding to position the ticks appropriately
     };
     var globalOptions = {};
 
@@ -948,6 +949,7 @@
               'background-color': this.getTickColor(value)
             }
           }
+          tick.style['left'] = this.valueToOffset(value) + this.options.ticksPadding + 'px';
           if (this.options.ticksTooltip) {
             tick.tooltip = this.options.ticksTooltip(value);
             tick.tooltipPlacement = this.options.vertical ? 'right' : 'top';
@@ -1924,7 +1926,7 @@
           if(newMinValue < this.options.minLimit) newMinValue = this.options.minLimit;
           if(newMaxValue > this.options.maxLimit) newMaxValue = this.options.maxLimit;
         }
-        
+
         this.positionTrackingBar(newMinValue, newMaxValue);
       },
 
